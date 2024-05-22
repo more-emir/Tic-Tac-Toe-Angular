@@ -1,23 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-
-
-export class AppComponent implements OnInit {
-  Array(arg0: number) {
-    throw new Error('Method not implemented.');
-  }
+export class AppComponent {
   title = 'Tic tac toe';
-  isXplaying = true;
 
-  dataForX:number[] = [];
-  dataForO:number[] = [];
+  isXplaying: boolean = true;
 
-  counter:number = 0;
+  dataForX: number[] = [];
+  dataForO: number[] = [];
+
+  winnerIs: any = '';
 
   winCombArray = [
     [0, 1, 2],
@@ -32,32 +28,47 @@ export class AppComponent implements OnInit {
 
   gridArray = ['', '', '', '', '', '', '', '', ''];
 
-  ngOnInit(): void {
-    for(let winArr of this.winCombArray) {
-      this.defineWinner(winArr, this.dataForX);
-    }
-  }
-
   handleMove(index: number) {
     if (this.isXplaying) {
       this.gridArray[index] = 'X';
-      this.dataForX.push(index)
-      console.log(this.dataForX)
+      this.dataForX.push(index);
     } else {
       this.gridArray[index] = 'O';
-      this.dataForO.push(index)
-      console.log(this.dataForO)
+      this.dataForO.push(index);
+    }
+
+    for (let arr of this.winCombArray) {
+      if (this.isXplaying) {
+        if (this.defineWinner(arr, this.dataForX)) {
+          this.winnerIs = 'X';
+          return;
+        }
+      }
+      if (!this.isXplaying) {
+        if (this.defineWinner(arr, this.dataForO)) {
+          this.winnerIs = 'O';
+          return;
+        }
+      }
     }
     this.isXplaying = !this.isXplaying;
   }
 
-  defineWinner(winArr: any[], dataArr: any[]) {
+  defineWinner(winArr: number[], dataArr: number[]) {
+    let counter = 0;
     for (let item of winArr) {
-      console.log(item)
-      if(dataArr.includes(item)) {
-        this.counter++;
+      if (dataArr.includes(item)) {
+        counter++;
+        console.log(counter);
       }
     }
-    return this.counter === 3 ? true : false;
+    return counter === 3 ? true : false;
+  }
+
+  restart() {
+    this.dataForX = [];
+    this.dataForO = [];
+    this.gridArray = ['', '', '', '', '', '', '', '', ''];
+    this.winnerIs = '';
   }
 }
