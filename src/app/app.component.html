@@ -1,7 +1,11 @@
 <main>
   <h1>{{ title | uppercase }}</h1>
   <section class="boxes">
-    <div *ngFor="let box of gridArray; let id = index" class="box" (click)="handleMove(id)">
+    <div 
+      role="button" 
+      *ngFor="let box of gridArray; let id = index" 
+      class="box" 
+      (click)="winnerIs ? null : handleMove(id)">
       {{ box }}
     </div>
   </section>

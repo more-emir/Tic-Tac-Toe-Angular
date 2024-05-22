@@ -66,6 +66,7 @@ export class AppComponent {
   }
 
   restart() {
+    this.isXplaying = !this.isXplaying;
     this.dataForX = [];
     this.dataForO = [];
     this.gridArray = ['', '', '', '', '', '', '', '', ''];
