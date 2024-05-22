@@ -13,9 +13,9 @@ export class AppComponent {
   dataForX: number[] = [];
   dataForO: number[] = [];
 
-  winnerIs: any = '';
+  winnerIs: string = '';
 
-  winCombArray = [
+  winCombArray:number[][] = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
